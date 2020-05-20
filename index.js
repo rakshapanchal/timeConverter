@@ -2,7 +2,6 @@ const timeConvertor = (time12h) => {
     const [time, modifier] = time12h.split(' ');
     let [hours, minutes] = time.split(':');
     hours = parseInt(hours);
-    console.log(modifier)
     if (hours < 12 && modifier.toLowerCase() == 'am') {
         hours = hours;
     } else if (hours < 12 && modifier.toLowerCase() == 'pm') {
@@ -10,7 +9,6 @@ const timeConvertor = (time12h) => {
     } else if (hours == 12 && modifier.toLowerCase() == 'pm') {
         hours = hours;
     }
-
     if (minutes) {
         return `${hours}:${minutes}`;
     } else {
@@ -18,16 +16,31 @@ const timeConvertor = (time12h) => {
     }
 }
 
+const rangeValue = (RangeValue) => {
+    var [time1, time2] = RangeValue.split('-');
+    time1 = timeConvertor(time1);
+    time2 = timeConvertor(time2.trimLeft());
+    return `${time1} - ${time2}`
+}
+
 const Array = (ArrayList) => {
-    const Array1 = ArrayList.map(element => {
-        return timeConvertor(element)
-    });
-    console.log(Array1)
+    var Array1;
+    if (typeof ArrayList === 'object') {
+        Array1 = ArrayList.map(element => {
+            if (element.match(/-/g) != null) {
+                return rangeValue(element)
+            } else {
+                return timeConvertor(element)
+            }
+        });
+    } else {
+        if (ArrayList.match(/-/g) != null) {
+            Array1 = rangeValue(ArrayList)
+        } else {
+            Array1 = timeConvertor(ArrayList)
+        }
+    }
     return Array1;
 }
 
-Array(['7:30 pm'])
-module.exports = {
-    Array,
-
-}
+module.exports = Array
