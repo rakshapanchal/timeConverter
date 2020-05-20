@@ -1,6 +1,6 @@
 {
-  "name": "timeConverter",
-  "version": "1.0.0",
+  "name": "24hformat",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
